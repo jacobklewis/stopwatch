@@ -2,6 +2,7 @@ package com.example.stopwatch.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import com.example.stopwatch.R
 import com.example.stopwatch.utils.OnTimeUpdate
@@ -24,7 +25,13 @@ class MainActivity : AppCompatActivity(), MainView, View.OnClickListener {
         setInterval(this, presenter, 50)
 
         // Zero out Display
+        presenter.restore(savedInstanceState)
         presenter.updateTimeText()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        presenter.saveState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onClick(v: View?) {
